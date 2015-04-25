@@ -1,5 +1,6 @@
 class WalksController < ApplicationController
   before_action :set_walk, only: [:show, :edit, :update, :destroy]
+  before_action :get_users, only: [:new, :create, :edit, :update]
 
   # GET /walks
   # GET /walks.json
@@ -15,7 +16,7 @@ class WalksController < ApplicationController
   # GET /walks/new
   def new
     @walk = Walk.new
-    @users = User.all.map { |user| [user.name, user.id] }
+   
   end
 
   # GET /walks/1/edit
@@ -67,7 +68,12 @@ class WalksController < ApplicationController
     def set_walk
       @walk = Walk.find(params[:id])
     end
-
+    
+   def get_users
+     @users = User.all.map { |user| [user.name, user.id] }
+   end
+   
+   
     # Never trust parameters from the scary internet, only allow the white list through.
     def walk_params
       params.require(:walk).permit(:start, :distance, :calories, :speed, :duration, :user_id)
